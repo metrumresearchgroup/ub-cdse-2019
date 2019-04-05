@@ -1,3 +1,9 @@
+slidy_presentation:
+  number_sections: true
+  css: 
+    - "../styles/slidystyles.css"
+    - "../styles/colors.css"
+    - "../styles/precode.css"
 html_document: 
   theme: flatly
   highlight: pygments
@@ -7,10 +13,4 @@ html_document:
 github_document:
   toc: true
   html_preview: false
-slidy_presentation:
-  number_sections: true
-  css: 
-    - "../../src/styles/slidystyles.css"
-    - "../../src/styles/colors.css"
-    - "../../src/styles/precode.css"
 

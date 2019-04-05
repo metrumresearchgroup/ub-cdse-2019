@@ -13,6 +13,10 @@ grn {
   font-weight: bold;
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
+green {
+  color: darkgreen;
+  font-weight: bold;
+}
 orng {
   color: DarkOrange;
   font-weight: bold;

@@ -1,0 +1,33 @@
+---
+title: <green>Optimization in R with mrgsolve</green>
+author: University at Buffalo CDSE Days 2019
+date: <blu>Kyle Baron & Timmothy Knab / MetrumRG</blu>
+---
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(message = FALSE)
+options(mrgsolve.soloc = "build")
+```
+
+
+```{r, include = FALSE}
+library(mrgsolve)
+library(dplyr)
+library(knitr)
+library(lattice)
+
+```
+
+
+# mrgsolve
+
+
+# Optimization in R
+
+CRAN Task View: https://cran.r-project.org/web/views/Optimization.html
+
+
+
+
+
+
