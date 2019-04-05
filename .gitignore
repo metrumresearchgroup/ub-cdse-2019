@@ -1,3 +1,5 @@
+content/mapk/build
+.DS_Store
 # HTML in the root directory
 /*.html
 /*.md
