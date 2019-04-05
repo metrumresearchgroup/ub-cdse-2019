@@ -334,6 +334,22 @@ And compare against the answer we got from `lm`
 lm(Fertility ~ Examination, data = swiss) %>% tidy %>% pull(std.error)
 ```
 
+
+You can also try `nlme::fdHess` 
+```{r}
+library(nlme)
+
+he <- fdHess(pars  = fit$par, fun = ml, ex = ex, fer = fer)
+
+he
+
+he$Hessian %>% solve %>% diag %>% sqrt
+```
+
+In my experience, it is frequently necessary to just bootstrap the data
+set.
+
+
 # Plot predicted and observed values
 
 Take the final parameter estimates
