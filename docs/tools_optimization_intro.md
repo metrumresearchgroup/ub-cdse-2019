@@ -49,14 +49,13 @@ glimpse(swiss, width = 60, strict.width="cut")
 
 We’ll work on a regression model for the standardized fertility measure
 (dependent variable) as function of the `Examination` predictor (percent
-draftees receiving highest mark on army
-examination).
+draftees receiving highest mark on army examination).
 
 ``` r
 ggplot(swiss, aes(Examination,Fertility)) + geom_point() + geom_smooth()
 ```
 
-![](/Users/kyleb/ghe/internal-projects/ub-cdse-2019/docs/tools_optimization_intro_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](docs/figures/tools_optimization_intro-unnamed-chunk-3-1.png)<!-- -->
 
 Usually we’d fit this model in R like this:
 
@@ -248,7 +247,7 @@ arrange(test,value) %>% head
 ggplot(test) + geom_contour(aes(intercept,slope,z=value),bins=80)
 ```
 
-![](/Users/kyleb/ghe/internal-projects/ub-cdse-2019/docs/tools_optimization_intro_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](docs/figures/tools_optimization_intro-unnamed-chunk-13-1.png)<!-- -->
 
 ## Optimize
 
@@ -335,46 +334,46 @@ con <- DEoptim.control(itermax = 80, trace = 2)
 fit <- DEoptim(ofv, lower, upper, ex = ex, fer = fer, control=con)
 ```
 
-    . Iteration: 2 bestvalit: 803833.343986 bestmemit:    3.777259    9.946362
-    . Iteration: 4 bestvalit: 803833.343986 bestmemit:    3.777259    9.946362
-    . Iteration: 6 bestvalit: 546764.865566 bestmemit:    0.845184    8.746250
-    . Iteration: 8 bestvalit: 11144.379600 bestmemit:  108.213726   -2.500396
-    . Iteration: 10 bestvalit: 7011.187030 bestmemit:   71.968490   -0.517398
-    . Iteration: 12 bestvalit: 6392.279155 bestmemit:   94.927691   -1.733833
-    . Iteration: 14 bestvalit: 6392.279155 bestmemit:   94.927691   -1.733833
-    . Iteration: 16 bestvalit: 6392.279155 bestmemit:   94.927691   -1.733833
-    . Iteration: 18 bestvalit: 5447.811199 bestmemit:   82.677515   -0.540678
-    . Iteration: 20 bestvalit: 4347.290468 bestmemit:   82.581581   -0.781991
-    . Iteration: 22 bestvalit: 4250.210436 bestmemit:   89.575979   -1.145963
-    . Iteration: 24 bestvalit: 4250.210436 bestmemit:   89.575979   -1.145963
-    . Iteration: 26 bestvalit: 4203.165331 bestmemit:   88.302873   -1.080215
-    . Iteration: 28 bestvalit: 4203.165331 bestmemit:   88.302873   -1.080215
-    . Iteration: 30 bestvalit: 4203.165331 bestmemit:   88.302873   -1.080215
-    . Iteration: 32 bestvalit: 4203.165331 bestmemit:   88.302873   -1.080215
-    . Iteration: 34 bestvalit: 4191.978569 bestmemit:   86.582306   -0.977203
-    . Iteration: 36 bestvalit: 4190.137772 bestmemit:   87.435977   -1.056125
-    . Iteration: 38 bestvalit: 4186.461328 bestmemit:   86.554659   -1.010357
-    . Iteration: 40 bestvalit: 4183.662733 bestmemit:   86.731602   -1.005660
-    . Iteration: 42 bestvalit: 4183.662733 bestmemit:   86.731602   -1.005660
-    . Iteration: 44 bestvalit: 4183.662733 bestmemit:   86.731602   -1.005660
-    . Iteration: 46 bestvalit: 4183.662733 bestmemit:   86.731602   -1.005660
-    . Iteration: 48 bestvalit: 4183.662733 bestmemit:   86.731602   -1.005660
-    . Iteration: 50 bestvalit: 4183.662733 bestmemit:   86.731602   -1.005660
-    . Iteration: 52 bestvalit: 4183.610348 bestmemit:   86.873604   -1.013006
-    . Iteration: 54 bestvalit: 4183.610348 bestmemit:   86.873604   -1.013006
-    . Iteration: 56 bestvalit: 4183.610348 bestmemit:   86.873604   -1.013006
-    . Iteration: 58 bestvalit: 4183.577570 bestmemit:   86.788463   -1.010233
-    . Iteration: 60 bestvalit: 4183.577570 bestmemit:   86.788463   -1.010233
-    . Iteration: 62 bestvalit: 4183.567224 bestmemit:   86.816618   -1.011280
-    . Iteration: 64 bestvalit: 4183.567224 bestmemit:   86.816618   -1.011280
-    . Iteration: 66 bestvalit: 4183.567224 bestmemit:   86.816618   -1.011280
-    . Iteration: 68 bestvalit: 4183.567224 bestmemit:   86.816618   -1.011280
-    . Iteration: 70 bestvalit: 4183.567224 bestmemit:   86.816618   -1.011280
-    . Iteration: 72 bestvalit: 4183.567224 bestmemit:   86.816618   -1.011280
-    . Iteration: 74 bestvalit: 4183.567224 bestmemit:   86.816618   -1.011280
-    . Iteration: 76 bestvalit: 4183.567224 bestmemit:   86.816618   -1.011280
-    . Iteration: 78 bestvalit: 4183.567214 bestmemit:   86.821406   -1.011461
-    . Iteration: 80 bestvalit: 4183.567142 bestmemit:   86.818868   -1.011336
+    . Iteration: 2 bestvalit: 619610.686411 bestmemit:  118.839655    3.622406
+    . Iteration: 4 bestvalit: 49429.566934 bestmemit:  157.356053   -4.166927
+    . Iteration: 6 bestvalit: 49429.566934 bestmemit:  157.356053   -4.166927
+    . Iteration: 8 bestvalit: 49429.566934 bestmemit:  157.356053   -4.166927
+    . Iteration: 10 bestvalit: 24417.274654 bestmemit:   53.176649    1.459128
+    . Iteration: 12 bestvalit: 6105.476400 bestmemit:   78.942833   -0.918973
+    . Iteration: 14 bestvalit: 6105.476400 bestmemit:   78.942833   -0.918973
+    . Iteration: 16 bestvalit: 4425.462195 bestmemit:   83.927759   -0.972315
+    . Iteration: 18 bestvalit: 4425.462195 bestmemit:   83.927759   -0.972315
+    . Iteration: 20 bestvalit: 4425.462195 bestmemit:   83.927759   -0.972315
+    . Iteration: 22 bestvalit: 4232.095103 bestmemit:   88.749980   -1.074854
+    . Iteration: 24 bestvalit: 4232.095103 bestmemit:   88.749980   -1.074854
+    . Iteration: 26 bestvalit: 4212.739568 bestmemit:   86.507725   -1.038448
+    . Iteration: 28 bestvalit: 4195.650153 bestmemit:   86.109126   -0.998418
+    . Iteration: 30 bestvalit: 4192.573528 bestmemit:   87.238881   -1.010267
+    . Iteration: 32 bestvalit: 4192.573528 bestmemit:   87.238881   -1.010267
+    . Iteration: 34 bestvalit: 4186.431724 bestmemit:   87.319012   -1.042544
+    . Iteration: 36 bestvalit: 4183.983418 bestmemit:   87.010813   -1.023230
+    . Iteration: 38 bestvalit: 4183.580960 bestmemit:   86.779667   -1.009206
+    . Iteration: 40 bestvalit: 4183.580960 bestmemit:   86.779667   -1.009206
+    . Iteration: 42 bestvalit: 4183.580960 bestmemit:   86.779667   -1.009206
+    . Iteration: 44 bestvalit: 4183.580960 bestmemit:   86.779667   -1.009206
+    . Iteration: 46 bestvalit: 4183.580960 bestmemit:   86.779667   -1.009206
+    . Iteration: 48 bestvalit: 4183.580960 bestmemit:   86.779667   -1.009206
+    . Iteration: 50 bestvalit: 4183.580960 bestmemit:   86.779667   -1.009206
+    . Iteration: 52 bestvalit: 4183.571628 bestmemit:   86.809773   -1.011378
+    . Iteration: 54 bestvalit: 4183.567431 bestmemit:   86.812848   -1.011059
+    . Iteration: 56 bestvalit: 4183.567431 bestmemit:   86.812848   -1.011059
+    . Iteration: 58 bestvalit: 4183.567431 bestmemit:   86.812848   -1.011059
+    . Iteration: 60 bestvalit: 4183.567419 bestmemit:   86.816073   -1.011316
+    . Iteration: 62 bestvalit: 4183.567419 bestmemit:   86.816073   -1.011316
+    . Iteration: 64 bestvalit: 4183.567341 bestmemit:   86.813800   -1.011099
+    . Iteration: 66 bestvalit: 4183.567142 bestmemit:   86.818601   -1.011327
+    . Iteration: 68 bestvalit: 4183.567142 bestmemit:   86.818601   -1.011327
+    . Iteration: 70 bestvalit: 4183.567142 bestmemit:   86.818601   -1.011327
+    . Iteration: 72 bestvalit: 4183.567142 bestmemit:   86.818601   -1.011327
+    . Iteration: 74 bestvalit: 4183.567142 bestmemit:   86.818601   -1.011327
+    . Iteration: 76 bestvalit: 4183.567142 bestmemit:   86.818601   -1.011327
+    . Iteration: 78 bestvalit: 4183.567141 bestmemit:   86.818498   -1.011316
+    . Iteration: 80 bestvalit: 4183.567141 bestmemit:   86.818498   -1.011316
 
 # Maximum likelihood estimation
 
@@ -490,7 +489,7 @@ ggplot(data = data) +
   geom_line(aes(x = ex, y = pred), lwd = 2, col="red3") 
 ```
 
-![](/Users/kyleb/ghe/internal-projects/ub-cdse-2019/docs/tools_optimization_intro_files/figure-gfm/unnamed-chunk-27-1.png)<!-- -->
+![](docs/figures/tools_optimization_intro-unnamed-chunk-27-1.png)<!-- -->
 
 # Let’s try it
 
@@ -514,4 +513,4 @@ head(data)
 ggplot(data, aes(auc,response)) + geom_point()
 ```
 
-![](/Users/kyleb/ghe/internal-projects/ub-cdse-2019/docs/tools_optimization_intro_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
+![](docs/figures/tools_optimization_intro-unnamed-chunk-29-1.png)<!-- -->
