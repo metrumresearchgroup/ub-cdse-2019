@@ -7,3 +7,4 @@ After a brief introduction to mrgsolve (https://mrgsolve.github.io), we will dis
 ## Vignettes
 
 - Optimization introduction [docs/tools_optimization_intro.md](docs/tools_optimization_intro.md)
+
