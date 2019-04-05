@@ -214,6 +214,8 @@ sims <-
     "CETUX+VEMU+COBI+GDC", comb(dataCE, dataV,  dataCO, dataG)
   ) %>% mutate(object = map(object,as.data.frame))
 
+
+saveRDS(file = "mapk_setup.RDS", sims)
 ```
 
 
