@@ -14,5 +14,5 @@ virtual populations (parameters) according to the method of Allen et al.
 
 ## Vignettes
 
-- Optimization introduction [docs/tools_optimization_intro.md](docs/tools_optimization_intro.md)
+- Optimization introduction [docs/tools_optimization_intro.md](tools_optimization_intro.md)
 

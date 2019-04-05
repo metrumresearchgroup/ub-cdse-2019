@@ -7,7 +7,7 @@ date: ""
 
 ```{r, setup, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(comment='.', message =FALSE)
-knitr::opts_chunk$set(fig.path = "docs/figures/intro-")
+knitr::opts_chunk$set(fig.path = "figures/intro-")
 options(width = 130)
 ```
 
