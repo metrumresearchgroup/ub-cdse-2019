@@ -255,6 +255,7 @@ upper <- c(intercept = 1000, slope=100)
 
 con <- DEoptim.control(itermax = 80, trace = 2)
 
+set.seed(112233)
 fit <- DEoptim(ofv, lower, upper, ex = ex, fer = fer, control=con)
 ```
 
