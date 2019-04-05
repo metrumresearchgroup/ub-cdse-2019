@@ -6,7 +6,7 @@ date: ""
 
 
 ```{r, setup, echo = FALSE, message = FALSE}
-knitr::opts_chunk$set(comment='.', message =FALSE)
+source("script/global.R")
 knitr::opts_chunk$set(fig.path = "figures/intro-")
 options(width = 130)
 ```
@@ -362,7 +362,7 @@ ggplot(data = data) +
 # Let's try it
 
 ```{r}
-data <- readRDS("inst/data/pdfit.RDS")
+data <- readRDS("data/pdfit.RDS")
 
 head(data)
 ```

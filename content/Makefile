@@ -1,2 +1,2 @@
 all:
-	Rscript inst/script/build.R
+	Rscript script/build.R

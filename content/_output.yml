@@ -3,7 +3,7 @@ html_document:
   highlight: pygments
   toc: true
   number_sections: true
-  css: inst/styles/styles.css
+  css: styles/styles.css
 github_document:
   toc: true
   html_preview: false
