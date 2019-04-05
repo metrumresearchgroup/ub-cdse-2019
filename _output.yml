@@ -1,0 +1,8 @@
+html_document: 
+  theme: flatly
+  highlight: pygments
+  toc: true
+  number_sections: true
+  css: inst/styles/styles.css
+github_document:
+  toc: true
