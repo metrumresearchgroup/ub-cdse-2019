@@ -4,5 +4,6 @@ html_document:
   toc: true
   number_sections: true
   css: inst/styles/styles.css
+  self_contained: true
 github_document:
   toc: true
