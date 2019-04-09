@@ -393,7 +393,7 @@ ml <- function(p, ex, fer) {
   
   like <- dnorm(fer, fer_hat, p[3], log=TRUE)
   
-  -1*sum(like)
+  1/sum(like)
 }
 ```
 
@@ -414,7 +414,7 @@ theta <- c(intercept = 10, slope = 1, sd = 2)
 ml(theta, ex, fer)
 ```
 
-    . [1] 13274.61
+    . [1] -7.53318e-05
 
 And we get the same answer
 
@@ -424,7 +424,7 @@ fit <- newuoa(theta, ml, ex = ex, fer = fer)
 fit$par
 ```
 
-    . [1] 86.818530 -1.011317  9.434621
+    . [1] 86.818529 -1.011317  9.434621
 
 # Get standard error of estimate
 
@@ -438,10 +438,10 @@ he <- hessian(ml, fit$par, ex = ex, fer = fer)
 he
 ```
 
-    .               [,1]         [,2]          [,3]
-    . [1,]  5.280182e-01 8.706684e+00 -4.878745e-09
-    . [2,]  8.706684e+00 1.764592e+02  2.751098e-07
-    . [3,] -4.878745e-09 2.751098e-07  1.056036e+00
+    .              [,1]         [,2]         [,3]
+    . [1,] 1.781158e-05 2.937014e-04 7.975880e-12
+    . [2,] 2.937014e-04 5.952478e-03 1.555285e-11
+    . [3,] 7.975880e-12 1.555285e-11 3.562315e-05
 
 To derive the standard error
 
@@ -455,7 +455,7 @@ To derive the standard error
 he %>% solve %>% diag %>% sqrt
 ```
 
-    . [1] 3.1875394 0.1743644 0.9731070
+    . [1] 548.81755  30.02135 167.54590
 
 And compare against the answer we got from `lm`
 
@@ -472,29 +472,38 @@ library(nlme)
 
 he <- fdHess(pars  = fit$par, fun = ml, ex = ex, fer = fer)
 
-he
+he$Hessian
 ```
 
-    . $mean
-    . [1] 172.1763
-    . 
-    . $gradient
-    . [1]  2.276005e-08 -1.299493e-06  5.905133e-07
-    . 
-    . $Hessian
     .               [,1]          [,2]          [,3]
-    . [1,]  5.280183e-01  8.706690e+00 -2.933469e-05
-    . [2,]  8.706690e+00  1.764587e+02 -8.123530e-05
-    . [3,] -2.933469e-05 -8.123530e-05  1.056046e+00
-
-``` r
-he$Hessian %>% solve %>% diag %>% sqrt
-```
-
-    . [1] 3.1875681 0.1743662 0.9731027
+    . [1,]  1.781158e-05  2.937016e-04 -9.818583e-10
+    . [2,]  2.937016e-04  5.952485e-03 -7.437315e-09
+    . [3,] -9.818583e-10 -7.437315e-09  3.562305e-05
 
 In my experience, it is frequently necessary to just bootstrap the data
 set.
+
+``` r
+dat <- data.frame(ex = ex, fer = fer)
+x <- nls(fer~beta0 + beta1*ex, data = dat, start = list(beta0=90,beta1=-0.5))
+
+summary(x)
+```
+
+    . 
+    . Formula: fer ~ beta0 + beta1 * ex
+    . 
+    . Parameters:
+    .       Estimate Std. Error t value Pr(>|t|)    
+    . beta0  86.8185     3.2576  26.651  < 2e-16 ***
+    . beta1  -1.0113     0.1782  -5.675 9.45e-07 ***
+    . ---
+    . Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    . 
+    . Residual standard error: 9.642 on 45 degrees of freedom
+    . 
+    . Number of iterations to convergence: 1 
+    . Achieved convergence tolerance: 2.823e-16
 
 # Plot predicted and observed values
 
@@ -504,7 +513,7 @@ Take the final parameter estimates
 fit$par
 ```
 
-    . [1] 86.818530 -1.011317  9.434621
+    . [1] 86.818529 -1.011317  9.434621
 
 and pass them into our `linear_model` to generate predicted values.
 
@@ -522,7 +531,7 @@ ggplot(data = data) +
   geom_line(aes(x = ex, y = pred), lwd = 2, col="red3") 
 ```
 
-<img src="figures/intro-unnamed-chunk-28-1.png" style="display: block; margin: auto;" />
+<img src="figures/intro-unnamed-chunk-29-1.png" style="display: block; margin: auto;" />
 
 # Let’s try it
 
@@ -546,4 +555,4 @@ head(data)
 ggplot(data, aes(auc,response)) + geom_point()
 ```
 
-<img src="figures/intro-unnamed-chunk-30-1.png" style="display: block; margin: auto;" />
+<img src="figures/intro-unnamed-chunk-31-1.png" style="display: block; margin: auto;" />
