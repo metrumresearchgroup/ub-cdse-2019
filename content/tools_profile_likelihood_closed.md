@@ -16,6 +16,16 @@ Metrum Research Group
 library(tidyverse)
 library(mrgsolve)
 library(nloptr)
+```
+
+    ## 
+    ## Attaching package: 'nloptr'
+
+    ## The following objects are masked from 'package:minqa':
+    ## 
+    ##     bobyqa, newuoa
+
+``` r
 options(mrgsolve.soloc = "build")
 ```
 

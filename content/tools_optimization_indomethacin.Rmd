@@ -7,7 +7,8 @@ date: ""
 # Packages
 
 ```{r,echo=FALSE}
-knitr::opts_chunk$set(comment='.', message=FALSE, fig.path="figures/indo-")
+knitr::opts_chunk$set(comment='.', message=FALSE, fig.path="figures/indo-", 
+                      cache=TRUE, autodep=TRUE)
 ```
 
 ```{r}
