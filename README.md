@@ -19,4 +19,6 @@ virtual populations (parameters) according to the method of Allen et al.
 - Optimizers [tools_optimization_methods.md](content/tools_optimization_methods.md)
 - Likelihood profile - ddi model [tools_likelihood_profile.md](content/tools_profile_likelihood.md)
 - Likelihood profile - indomethacin [tools_likelihood_profile_closed.md](content/tools_profile_likelihood_closed.md)
+- Local sensitivity analysis [tools_sensitivity_local.md](content/tools_sensitivity_local.md)
+
 
