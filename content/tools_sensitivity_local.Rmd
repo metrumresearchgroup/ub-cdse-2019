@@ -7,8 +7,7 @@ date: ""
 
 ```{r, setup, echo = FALSE, message = FALSE}
 source("script/global.R")
-knitr::opts_chunk$set(fig.path = "figures/intro-")
-options(width = 130)
+knitr::opts_chunk$set(fig.path = "figures/sensitivity_local-")
 ```
 
 
