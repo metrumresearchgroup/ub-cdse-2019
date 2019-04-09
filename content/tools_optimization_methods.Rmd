@@ -4,12 +4,21 @@ author: "Metrum Research Group"
 date: ""
 ---
 
+```{r include =FALSE}
+knitr::opts_chunk$set(cache=TRUE, autodep=TRUE)
+```
+
+
 # Packages and setup
 
 ```{r, message = FALSE}
 library(tidyverse)
 library(PKPDmisc)
 library(mrgsolve)
+library(nloptr)
+library(DEoptim)
+library(GenSA)
+library(hydroPSO)
 source("script/functions.R")
 source("script/global.R")
 ```
@@ -58,13 +67,7 @@ data <-
   )
 
 
-data
 ```
-
-```{r}
-data %>% filter(evid==1)
-```
-
 
 
 - The goal is to fit the pitavastatin data either alone or 
@@ -139,7 +142,7 @@ wss <- function(dv, pred, weight = 1/dv) {
 
 
 
-### Prediction function
+#### Prediction function
 
 - Let's go through step by step what each line is doing for us
 
@@ -158,7 +161,7 @@ sim_ofv <- function(p, data, pred = FALSE) {
   
   p <- lapply(p,exp)
   
-  out <- mod %>% param(p) %>% mrgsim_d(data, output="df")
+  out <- mod %>% param(p) %>% mrgsim_q(data, output="df")
   
   if(pred) return(out)
   
@@ -217,66 +220,146 @@ fit <- nloptr::newuoa(x0 = theta, fn = sim_ofv, data = data)
 fit
 ```
 
-
-### Get some predictions to look at how the fit went
-
-Recall that our parameters are
-```{r}
-fit$par
-```
-
-We can generate a prediction that matches our data like this
-
-```{r}
-sim_ofv(fit$par,data = dose, pred = TRUE) %>% filter(time >= 1)
-```
-
-We can also get the predictions under the initial conditions by passing in 
-`theta` rather than `fit$par`
-
-
-In the next block, generate
-
-1. Predictions with the final estimates
-1. Predications with the initial estimates
-1. Observed data to overlay
-
-```{r}
-df_pred <- sim_ofv(fit$par, dose, pred=TRUE) %>% mutate(type = typef(ID))
-df_init <- sim_ofv(theta,   dose, pred=TRUE) %>% mutate(type = typef(ID))
-df_obs <-  mutate(data, type=typef(ID))
-```
-
-
-### Make some plots
-```{r, warning = FALSE}
-ggplot(df_pred, aes(time,CP)) + 
-  geom_line(lwd=1) + 
-  geom_point(data = df_obs, aes(time,DV),col="firebrick",size=2) + 
-  facet_wrap(~type) + scale_y_log10() 
-```
-
-
-
-### A nicer plot
-```{r, warning = FALSE}
-ggplot(data=df_pred) + 
-  geom_line(data=df_init,aes(time,CP,lty="A"), col="black", lwd=0.7) +
-  geom_line(aes(time,CP,lty="B"),col="black",lwd=0.7) + 
-  geom_point(data=df_obs,aes(time,DV,col=type),size=3) + 
-  facet_wrap(~type) + 
-  scale_y_continuous(trans="log",breaks=10^seq(-4,4), 
-                     limits=c(0.1,100),
-                     "Pitavastatin concentration (ng/mL)") +
-  scale_x_continuous(name="Time (hours)", breaks=seq(0,14,2)) +
-  scale_linetype_manual(values= c(2,1), guide = FALSE,
-                        labels=c("Initial estimates", "Final estimates"), name="") +
-  theme_bw() + theme(legend.position="top") 
-```
-
-### The final objective function value and estimates
+#### The final objective function value and estimates
 ```{r}
 sim_ofv(fit$par,data=data)
 
-exp(fit$par)
+exp(fit$par) %>% set_names(names(theta))
+```
+
+
+## `optim`: Nelder-Mead
+
+```{r}
+fit1b <- optim(theta, sim_ofv, data=data, control = list(maxit = 1000))
+```
+
+## `neldermead`: Alternate Nelder-Mead
+```{r}
+fit1c <- nloptr::neldermead(x0=theta, fn=sim_ofv, data = data )
+```
+
+## `DEoptim`: differential evolution algorithm
+
+https://en.wikipedia.org/wiki/Differential_evolution
+
+"Performs evolutionary global optimization via the 
+Differential Evolution algorithm."
+
+```{r}
+lower <- rep(-6,length(theta)) %>% setNames(names(theta))
+upper <- rep(5, length(theta)) %>% setNames(names(theta))
+
+set.seed(330303)
+
+decontrol <- DEoptim.control(
+  trace = 10,
+  NP=10*length(theta), 
+  CR=0.925, 
+  F=0.85,
+  itermax=90, 
+  storepopfrom=0
+)
+
+fit2 <- DEoptim(
+  fn=sim_ofv, 
+  lower=lower,
+  upper=upper, 
+  control=decontrol,
+  data=data
+)
+
+```
+
+#### DA for the plot
+```{r, eval = TRUE}
+pops <- lapply(fit2$member$storepop, as.data.frame)
+hx <- bind_rows(pops)
+hx <- mutate(hx, iteration=rep(1:decontrol$itermax,each=decontrol$NP))
+hx <- mutate(hx, pop = rep(1:decontrol$NP, time=decontrol$itermax))
+hxm <- gather(hx, variable, value, 1:5) %>% mutate(value = exp(value))
+best <- as_tibble(fit2$member$bestmemit) %>% 
+  mutate(iteration = 1:decontrol$itermax)
+bestm <- gather(best,variable,value,1:5) %>% mutate(value = exp(value))
+```
+
+```{r, eval = TRUE, fig.width = 8}
+ggplot(data=hxm) + 
+  geom_line(aes(iteration,value,group=pop),col="darkslateblue") + 
+  geom_line(data=bestm,aes(iteration,value),col="orange",lwd=1) + 
+  scale_y_continuous(trans="log", breaks=10^seq(-4,4), name="Parameter value") + 
+  facet_wrap(~variable, ncol=2, scales="free_y") + theme_bw()
+```
+
+
+## `GenSA`: simulated annealing 
+```{r}
+set.seed(11001)
+
+sacontrol <- list(maxit = 100, nb.stop.improvement = 20, verbose = TRUE)
+
+fit3 <- GenSA(
+  NULL, sim_ofv, lower=lower+1, upper=upper-1, data = data, control = sacontrol
+)
+```
+
+## `hydroPSO`: particle swarm optimization
+
+https://en.wikipedia.org/wiki/Particle_swarm_optimization
+
+```{r}
+set.seed(22022013)
+
+fit4 <- hydroPSO(
+  theta, fn = "sim_ofv", lower = lower, upper = upper, 
+  control = list(maxit = 100, REPORT = 5),
+  data = data
+)
+```
+
+
+## `nloptr::CRS`: controlled random search
+
+```{r}
+set.seed(11000222)
+
+crs <- crs2lm(
+  x0 = theta, 
+  fn=sim_ofv, 
+  lower = lower, 
+  upper = upper, 
+  data=data,
+  maxeval=2500
+)
+```
+
+
+# Compare optimization methods
+```{r}
+results <- list(theta, fit$par, fit1b$par, fit1c$par, fit2$optim$bestmem, fit3$par, fit4$par, crs$par)
+
+results <- map(results, set_names, nm = names(theta))
+
+results <- map(results, exp)
+
+tibble(
+  method = c("initial", "newuoa", "nelder", "nelder2", "DEoptim", "SA", "PSO","CRS"),
+  fbCLintall = map_dbl(results, "fbCLintall"), 
+  ikiu = map_dbl(results, "ikiu"), 
+  fbile = map_dbl(results, "fbile"), 
+  ka = map_dbl(results, "ka"), 
+  ktr = map_dbl(results, "ktr")
+) %>% mutate_if(is.double, list(signif), digits = 4)
+
+```
+
+
+```{r}
+value0 <- sim_ofv(theta,data)
+results <- c(value0, fit$value, fit1b$value, fit1c$value, fit2$optim$bestval, fit3$value, fit4$value, crs$value)
+
+tibble(
+  method = c("initial", "newuoa", "nelder", "nelder2", "DEoptim", "SA", "PSO","CRS"),
+  value = results
+) 
 ```
