@@ -172,4 +172,3 @@ ggplot(df, aes(value,ofv)) + geom_line(lwd=1) + geom_point(size=4) +
   geom_vline(xintercept = exp(ci),col="darkgreen",lwd=1,lty=2) +
   ggtitle("Green/Grey: hessian; Orange: likelihood profile")
 ```
-

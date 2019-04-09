@@ -7,7 +7,8 @@ date: ""
 
 ```{r, setup, echo = FALSE, message = FALSE}
 source("script/global.R")
-knitr::opts_chunk$set(fig.path = "figures/sensitivity_local-")
+knitr::opts_chunk$set(fig.path = "figures/sensitivity_local-", 
+                      cache=TRUE, autodep=TRUE)
 ```
 
 
@@ -19,39 +20,82 @@ library(FME)
 options(mrgsolve.soloc = "build")
 ```
 
+# Sensitivity analysis with PBPK model
 
+## Load the model
 
 ```{r}
-mod <- mread_cache("model/yoshikado.cpp", end = 12, delta = 0.5,atol=1E-12,rtol=1E-12)
+mod <- mread_cache("model/yoshikado.cpp")
+mod <- update(mod, end = 12, delta = 0.5, atol=1E-12,rtol=1E-12)
+```
+
+## Load a data set
+
+```{r}
 data <- read_csv("data/fig4a.csv") 
 data <- mutate(data, DV = ifelse(DV < 0, NA_real_, DV))
 data <- filter(data, ID==2)
 dose <- filter(data, evid==1)
+```
 
+Statin / cyclosporine DDI
+```{r}
+mod %>% mrgsim_d(dose,delta=0.1) %>% plot(CP~time)
+```
+
+## Define a function for sensitivity analysis
+
+Do what we just did, but wrap it up in a function and pass in some parameters.
+
+```{r}
 fun <- function(pars,data) {
   mod %>% 
     param(pars) %>%
     mrgsim_d(dose,obsonly=TRUE,output="df") %>%
     select(-ID)
 }
+```
 
-pars <- as.list(param(mod))[c("fbCLintall", "ikiu", "fbile", "ka", "ktr", "Vadi")]
+Just like in the optimization function, we update the model object with 
+whatever parameters were passed in and simulate.  
 
-locSens <- sensFun(func=fun, parms=pars, sensvar="CP", tiny=1e-5,data=data)
+IMPORTANT to return a data frame of simulated data
+
+## Pick parameters for sensitivity analysis
+```{r}
+pars <- as.numeric(param(mod))[c("fbCLintall", "ikiu", "fbile", "ka", "ktr", "Vadi")]
+
+pars
 ```
 
 
+Call `sensFun` from the FME package
+
+  - `func` - the sensitivity function we defined above
+  - `parms` - parameters to investigate
+  - `sensvar` - the output(s) that you want to look at
+  - `tiny` the step size for sensitivity analysis
+  - `data` this is an argument for our sensivitity function
+
+```{r}
+locSens <- FME::sensFun(func=fun, parms=pars, sensvar="CP", tiny=1e-5, data=data)
+```
+
+## Summarize
 ```{r}
 summary(locSens)
 ```
 
-## summary plots
+__Summary plots__
+
 ```{r}
 plot(summary(locSens))
 ```
 
+A nicer view
+
 ```{r}
-# nicer view
+
 summ <- 
   as_tibble(summary(locSens)) %>%
   mutate(parms = names(pars)) 
