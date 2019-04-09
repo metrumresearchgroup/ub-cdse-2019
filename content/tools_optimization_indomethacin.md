@@ -69,7 +69,7 @@ ggplot(Indometh, aes(time,conc,group=Subject)) +
   scale_y_continuous(trans = "log", breaks = 10^seq(-4,4))
 ```
 
-![](tools_optimization_indomethacin_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+![](figures/indo-unnamed-chunk-4-1.png)<!-- -->
 
 This is individual-level data, but we are going to do naive pooled
 analysis.
@@ -197,7 +197,7 @@ ggplot(data = data) +
   geom_line(aes(time,pred),col="firebrick", lwd=1)
 ```
 
-![](tools_optimization_indomethacin_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](figures/indo-unnamed-chunk-11-1.png)<!-- -->
 
 # Your turn
 
@@ -272,7 +272,7 @@ ggplot(data = data) +
 
     . Warning: Removed 6 rows containing missing values (geom_point).
 
-![](tools_optimization_indomethacin_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](figures/indo-unnamed-chunk-15-1.png)<!-- -->
 
   - Try weighted least squares
 
@@ -349,7 +349,7 @@ ggplot(data = data) +
 
     . Warning: Removed 6 rows containing missing values (geom_point).
 
-![](tools_optimization_indomethacin_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](figures/indo-unnamed-chunk-20-1.png)<!-- -->
 
 ## Fit the data with `RcppDE::DEoptim`
 
