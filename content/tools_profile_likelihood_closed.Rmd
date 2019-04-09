@@ -7,7 +7,7 @@ date: ""
 
 ```{r, setup, echo = FALSE, message = FALSE}
 source("script/global.R")
-knitr::opts_chunk$set(fig.path = "figures/llp_closed-")
+knitr::opts_chunk$set(fig.path = "figures/llp_closed-", cache=TRUE, autodep=TRUE)
 ```
 
 
