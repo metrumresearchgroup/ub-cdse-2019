@@ -15,6 +15,8 @@ virtual populations (parameters) according to the method of Allen et al.
 ## Vignettes
 
 - Optimization introduction [tools_optimization_intro.md](content/tools_optimization_intro.md)
+- Indomethacin PK [tools_optimization_indomethacin.md](content/tools_optimization_indomethacin.md)
+- Optimizers [tools_optimization_methods.md](content/tools_optimization_methods.md)
 - Likelihood profile - ddi model [tools_likelihood_profile.md](content/tools_likelihood_profile.md)
 - Likelihood profile - indomethacin [tools_likelihood_profile_closed.md](content/tools_likelihood_profile_closed.md)
 
