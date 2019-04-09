@@ -8,7 +8,6 @@ date: ""
 ```{r, setup, echo = FALSE, message = FALSE}
 source("script/global.R")
 knitr::opts_chunk$set(fig.path = "figures/intro-")
-options(width = 130)
 ```
 
 
@@ -277,7 +276,7 @@ ml <- function(p, ex, fer) {
   
   like <- dnorm(fer, fer_hat, p[3], log=TRUE)
   
-  1/sum(like)
+  -1*sum(like)
 }
 ```
 
@@ -348,15 +347,6 @@ he$Hessian
 
 In my experience, it is frequently necessary to just bootstrap the data
 set.
-
-```{r}
-dat <- data.frame(ex = ex, fer = fer)
-x <- nls(fer~beta0 + beta1*ex, data = dat, start = list(beta0=90,beta1=-0.5))
-
-summary(x)
-```
-
-
 
 
 # Plot predicted and observed values
