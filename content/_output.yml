@@ -6,8 +6,8 @@ html_document:
   css: styles/styles.css
 github_document:
   toc: true
-  fig_width: 4
-  fig_height: 2.86
+  fig_width: 2
+  fig_height: 2
 slidy_presentation:
   number_sections: true
   css: 
