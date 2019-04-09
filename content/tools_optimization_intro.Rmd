@@ -4,18 +4,17 @@ author: "Metrum Research Group"
 date: ""
 ---
 
-
-```{r, setup, echo = FALSE, message = FALSE}
-source("script/global.R")
-knitr::opts_chunk$set(fig.path = "figures/intro-")
-```
-
-
 ```{r, message = FALSE}
 library(tidyverse)
 library(broom)
 library(ggplot2)
 theme_set(theme_bw())
+```
+
+
+```{r, setup, echo = FALSE, message = FALSE}
+source("script/global.R")
+knitr::opts_chunk$set(fig.path = "figures/intro-")
 ```
 
 

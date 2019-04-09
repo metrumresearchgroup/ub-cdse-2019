@@ -4,19 +4,19 @@ author: "Metrum Research Group"
 date: ""
 ---
 
-
-```{r, setup, echo = FALSE, message = FALSE}
-source("script/global.R")
-knitr::opts_chunk$set(fig.path = "figures/llp-", cache=TRUE,autodep=TRUE)
-```
-
-
 ```{r}
 library(tidyverse)
 library(mrgsolve)
 library(nloptr)
 options(mrgsolve.soloc = "build")
 ```
+
+
+```{r, setup, echo = FALSE, message = FALSE}
+source("script/global.R")
+knitr::opts_chunk$set(fig.path = "figures/llp-", cache=TRUE,autodep=TRUE)
+```
+
 
 # First, we fit the model by normal likelihood estimation
 

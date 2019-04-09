@@ -4,11 +4,6 @@ author: "Metrum Research Group"
 date: ""
 ---
 
-```{r include =FALSE}
-knitr::opts_chunk$set(cache=TRUE, autodep=TRUE,fig.path="figures/methods-")
-```
-
-
 # Packages and setup
 
 ```{r, message = FALSE}
@@ -22,6 +17,12 @@ library(hydroPSO)
 source("script/functions.R")
 source("script/global.R")
 ```
+
+
+```{r include =FALSE}
+knitr::opts_chunk$set(cache=TRUE, autodep=TRUE,fig.path="figures/methods-")
+```
+
 
 ```{r}
 set.seed(10101)
