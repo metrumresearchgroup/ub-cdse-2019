@@ -4,7 +4,10 @@ render("tools_optimization_intro.Rmd", output_format = "html_document")
 
 render("tools_optimization_indomethacin.Rmd", output_format = "github_document")
 render("tools_optimization_indomethacin.Rmd", output_format = "html_document")
+
 render("tools_profile_likelihood_closed.Rmd", output_format = "github_document")
 render("tools_profile_likelihood_closed.Rmd", output_format = "html_document")
 
+render("tools_profile_likelihood.Rmd", output_format = "github_document")
+render("tools_profile_likelihood.Rmd", output_format = "html_document")
 
