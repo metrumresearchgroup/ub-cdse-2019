@@ -123,7 +123,7 @@ ggplot(data=data,aes(time,DV)) +
   scale_y_continuous(trans="log", limits=c(0.1,300), breaks=logbr()) 
 ```
 
-<img src="tools_optimization_pbpk_ddi_files/figure-gfm/unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
+<img src="figures/pbpk-unnamed-chunk-8-1.png" style="display: block; margin: auto;" />
 
 # PBPK model: pitavastatin / CsA DDI
 
@@ -162,7 +162,7 @@ ggplot(sims, aes(time,CP,col=type)) +
   scale_y_log10(name = "Pitavastatin concentration")
 ```
 
-<img src="tools_optimization_pbpk_ddi_files/figure-gfm/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="figures/pbpk-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 ``` r
 sims %>% 
@@ -599,7 +599,7 @@ ggplot(df_pred, aes(time,CP)) +
   facet_wrap(~type) + scale_y_log10() 
 ```
 
-<img src="tools_optimization_pbpk_ddi_files/figure-gfm/unnamed-chunk-22-1.png" style="display: block; margin: auto;" />
+<img src="figures/pbpk-unnamed-chunk-22-1.png" style="display: block; margin: auto;" />
 
 ### A nicer plot
 
@@ -618,7 +618,7 @@ ggplot(data=df_pred) +
   theme_bw() + theme(legend.position="top") 
 ```
 
-<img src="tools_optimization_pbpk_ddi_files/figure-gfm/unnamed-chunk-23-1.png" style="display: block; margin: auto;" />
+<img src="figures/pbpk-unnamed-chunk-23-1.png" style="display: block; margin: auto;" />
 
 ### The final objective function value and estimates
 

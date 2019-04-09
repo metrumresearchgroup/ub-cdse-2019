@@ -5,7 +5,7 @@ date: ""
 ---
 
 ```{r include =FALSE}
-knitr::opts_chunk$set(cache=TRUE, autodep=TRUE)
+knitr::opts_chunk$set(cache=TRUE, autodep=TRUE, fig.path="figures/pbpk-")
 ```
 
 # Packages and setup
