@@ -808,7 +808,7 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb33-4" title="4">  </a>
 <a class="sourceLine" id="cb33-5" title="5">  like &lt;-<span class="st"> </span><span class="kw">dnorm</span>(fer, fer_hat, p[<span class="dv">3</span>], <span class="dt">log=</span><span class="ot">TRUE</span>)</a>
 <a class="sourceLine" id="cb33-6" title="6">  </a>
-<a class="sourceLine" id="cb33-7" title="7">  <span class="dv">-1</span><span class="op">*</span><span class="kw">sum</span>(like)</a>
+<a class="sourceLine" id="cb33-7" title="7">  <span class="dv">-2</span><span class="op">*</span><span class="kw">sum</span>(like)</a>
 <a class="sourceLine" id="cb33-8" title="8">}</a></code></pre></div>
 <p><strong>Note</strong></p>
 <ol style="list-style-type: decimal">
@@ -820,7 +820,7 @@ $(document).ready(function () {
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">theta &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dt">intercept =</span> <span class="dv">10</span>, <span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">sd =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb34-2" title="2"></a>
 <a class="sourceLine" id="cb34-3" title="3"><span class="kw">ml</span>(theta, ex, fer)</a></code></pre></div>
-<pre><code>. [1] 13274.61</code></pre>
+<pre><code>. [1] 26549.21</code></pre>
 <p>And we get the same answer</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">fit &lt;-<span class="st"> </span><span class="kw">newuoa</span>(theta, ml, <span class="dt">ex =</span> ex, <span class="dt">fer =</span> fer)</a>
 <a class="sourceLine" id="cb36-2" title="2"></a>
@@ -836,9 +836,9 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb38-4" title="4"></a>
 <a class="sourceLine" id="cb38-5" title="5">he</a></code></pre></div>
 <pre><code>.               [,1]         [,2]          [,3]
-. [1,]  5.280182e-01 8.706684e+00 -4.878745e-09
-. [2,]  8.706684e+00 1.764592e+02  2.751098e-07
-. [3,] -4.878745e-09 2.751098e-07  1.056036e+00</code></pre>
+. [1,]  1.056036e+00 1.741337e+01 -9.757489e-09
+. [2,]  1.741337e+01 3.529184e+02  5.502195e-07
+. [3,] -9.757489e-09 5.502195e-07  2.112073e+00</code></pre>
 <p>To derive the standard error</p>
 <ol style="list-style-type: decimal">
 <li>Invert the hessian matrix</li>
@@ -846,7 +846,7 @@ $(document).ready(function () {
 <li>Take the squre root</li>
 </ol>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1">he <span class="op">%&gt;%</span><span class="st"> </span>solve <span class="op">%&gt;%</span><span class="st"> </span>diag <span class="op">%&gt;%</span><span class="st"> </span>sqrt</a></code></pre></div>
-<pre><code>. [1] 3.1875394 0.1743644 0.9731070</code></pre>
+<pre><code>. [1] 2.2539307 0.1232943 0.6880905</code></pre>
 <p>And compare against the answer we got from <code>lm</code></p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">lm</span>(Fertility <span class="op">~</span><span class="st"> </span>Examination, <span class="dt">data =</span> swiss) <span class="op">%&gt;%</span><span class="st"> </span>tidy <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pull</span>(std.error)</a></code></pre></div>
 <pre><code>. [1] 3.2576034 0.1781971</code></pre>
@@ -857,18 +857,18 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb44-4" title="4"></a>
 <a class="sourceLine" id="cb44-5" title="5">he</a></code></pre></div>
 <pre><code>. $mean
-. [1] 172.1763
+. [1] 344.3525
 . 
 . $gradient
-. [1]  2.276005e-08 -1.299493e-06  5.905133e-07
+. [1]  4.552009e-08 -2.598987e-06  1.181027e-06
 . 
 . $Hessian
 .               [,1]          [,2]          [,3]
-. [1,]  5.280183e-01  8.706690e+00 -2.933469e-05
-. [2,]  8.706690e+00  1.764587e+02 -8.123530e-05
-. [3,] -2.933469e-05 -8.123530e-05  1.056046e+00</code></pre>
+. [1,]  1.056037e+00  1.741338e+01 -5.866938e-05
+. [2,]  1.741338e+01  3.529175e+02 -1.624706e-04
+. [3,] -5.866938e-05 -1.624706e-04  2.112091e+00</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1">he<span class="op">$</span>Hessian <span class="op">%&gt;%</span><span class="st"> </span>solve <span class="op">%&gt;%</span><span class="st"> </span>diag <span class="op">%&gt;%</span><span class="st"> </span>sqrt</a></code></pre></div>
-<pre><code>. [1] 3.1875681 0.1743662 0.9731027</code></pre>
+<pre><code>. [1] 2.2539510 0.1232955 0.6880875</code></pre>
 <p>In my experience, it is frequently necessary to just bootstrap the data set.</p>
 </div>
 <div id="plot-predicted-and-observed-values" class="section level1">

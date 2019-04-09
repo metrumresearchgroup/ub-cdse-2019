@@ -369,10 +369,76 @@ list-style-type: none;
   <p class="author">
 University at Buffalo CDSE Days 2019
   </p>
-  <p class="date"><blu>Kyle Baron &amp; Timmothy Knab / MetrumRG</blu></p>
+  <p class="date"><blu>Kyle Baron &amp; Timothy Knab / MetrumRG</blu></p>
 </div>
-<div id="mrgsolve" class="slide section level1">
-<h1>mrgsolve</h1>
+<div id="thanks-for-inviting-us-back" class="slide section level1">
+<h1>Thanks for inviting us back!</h1>
+<p><strong>Case studies with mrgsolve: PBPK and QSP model implementation and utilization in R </strong></p>
+<p><a href="https://github.com/metrumresearchgroup/pbpk-qsp-mrgsolve" class="uri">https://github.com/metrumresearchgroup/pbpk-qsp-mrgsolve</a></p>
+<p>CDSE Days 2018</p>
+</div>
+<div id="about-mrgsolve" class="slide section level1">
+<h1>About <code>mrgsolve</code></h1>
+<ul>
+<li><code>R</code> package for simulation from ODE-based models
+<ul>
+<li>Free, OpenSource, GitHub, CRAN</li>
+</ul></li>
+<li>Language
+<ul>
+<li>Models written in <code>C++</code> inside model specification format</li>
+<li>General purpose solver: <code>ODEPACK</code> / <code>DLSODA</code> (<code>FORTRAN</code>)
+<ul>
+<li>Automatically detect and switch between non-stiff (Adams) and stiff (BDF) methods for solving the differential equations</li>
+</ul></li>
+<li>Simulation workflow in <code>R</code></li>
+</ul></li>
+<li>Hierarchical (population) simulation
+<ul>
+<li><code>ID</code>, <span class="math inline">\(\eta\)</span>, <span class="math inline">\(\varepsilon\)</span></li>
+</ul></li>
+<li>Integrated PK functionaility
+<ul>
+<li>Bolus, infusion, <code>F</code>, <code>ALAG</code>, <code>SS</code> etc, handled under the hood</li>
+<li>1- and 2-cmt PK models in closed-form</li>
+</ul></li>
+<li>Extensible using <code>R</code>, <code>C++</code>, <code>Rcpp</code>, <code>boost</code>, <code>RcppArmadillo</code></li>
+<li><code>R</code> is it’s natural habitat</li>
+</ul>
+</div>
+<div id="mrgsolve-started-as-qsp-modeling-tool" class="slide section level1">
+<h1><code>mrgsolve</code> started as <code>QSP</code> modeling tool</h1>
+<ul>
+<li>Motivation: large bone/mineral homeostatsis model (CaBone)</li>
+<li>History using
+<ul>
+<li>Berkeley Madonna</li>
+<li>WinBUGS</li>
+<li>NONMEM (attempted)</li>
+</ul></li>
+<li>2010: write <code>R</code> front end to <code>deSolve</code></li>
+<li>2012: write <code>C++</code> interface to <code>DLSODA</code></li>
+<li>Develop dosing / event capability</li>
+<li>More recently, expose functionality provided by
+<ul>
+<li><code>Rcpp</code> - vectors, matrices, functions, environments, random numbers</li>
+<li><code>boost</code> - numerical tools in <code>C++</code></li>
+<li>users’ own <code>C++</code> code (functions, data structures, classes)</li>
+</ul></li>
+<li>Translator from <code>SBML</code> to <code>mrgsolve</code> using <code>R</code> bindings to <code>libSBML</code></li>
+</ul>
+</div>
+<div id="orientation" class="slide section level1">
+<h1>Orientation</h1>
+<ul>
+<li><p><a href="https://CRAN.R-project.org/package=mrgsolve" class="uri">https://CRAN.R-project.org/package=mrgsolve</a></p></li>
+<li><p>GitHub site: <a href="https://github.com/metrumresearchgroup/mrgsolve" class="uri">https://github.com/metrumresearchgroup/mrgsolve</a></p></li>
+<li><p>Issues and questions: <a href="https://github.com/metrumresearchgroup/mrgsolve/issues" class="uri">https://github.com/metrumresearchgroup/mrgsolve/issues</a></p></li>
+<li><p>mrgsolve website: <a href="https://mrgsolve.github.io" class="uri">https://mrgsolve.github.io</a></p></li>
+<li><p>User Guide: <a href="https://mrgsolve.github.io/user_guide" class="uri">https://mrgsolve.github.io/user_guide</a></p></li>
+<li><p>Blog: <a href="https://mrgsolve.github.io/blog" class="uri">https://mrgsolve.github.io/blog</a></p></li>
+<li><p>Vignettes: <a href="https://mrgsolve.github.io/vignettes" class="uri">https://mrgsolve.github.io/vignettes</a></p></li>
+</ul>
 </div>
 <div id="optimization-in-r" class="slide section level1">
 <h1>Optimization in R</h1>

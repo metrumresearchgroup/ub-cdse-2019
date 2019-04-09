@@ -277,7 +277,7 @@ ml <- function(p, ex, fer) {
   
   like <- dnorm(fer, fer_hat, p[3], log=TRUE)
   
-  -1*sum(like)
+  1/sum(like)
 }
 ```
 
@@ -335,19 +335,28 @@ lm(Fertility ~ Examination, data = swiss) %>% tidy %>% pull(std.error)
 ```
 
 
+
+
 You can also try `nlme::fdHess` 
 ```{r}
 library(nlme)
 
 he <- fdHess(pars  = fit$par, fun = ml, ex = ex, fer = fer)
 
-he
-
-he$Hessian %>% solve %>% diag %>% sqrt
+he$Hessian
 ```
 
 In my experience, it is frequently necessary to just bootstrap the data
 set.
+
+```{r}
+dat <- data.frame(ex = ex, fer = fer)
+x <- nls(fer~beta0 + beta1*ex, data = dat, start = list(beta0=90,beta1=-0.5))
+
+summary(x)
+```
+
+
 
 
 # Plot predicted and observed values

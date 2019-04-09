@@ -1,7 +1,7 @@
 ---
 title: <green>Optimization in R with mrgsolve</green>
 author: University at Buffalo CDSE Days 2019
-date: <blu>Kyle Baron & Timmothy Knab / MetrumRG</blu>
+date: <blu>Kyle Baron & Timothy Knab / MetrumRG</blu>
 ---
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE}
@@ -18,14 +18,72 @@ library(lattice)
 
 ```
 
+# Thanks for inviting us back!
 
-# mrgsolve
+
+__Case studies with mrgsolve: PBPK and QSP model implementation and utilization 
+in  R __
+
+https://github.com/metrumresearchgroup/pbpk-qsp-mrgsolve
+
+CDSE Days 2018
 
 
-# Optimization in R
+# About `mrgsolve` 
+
+- `R` package for simulation from ODE-based models
+    - Free, OpenSource, GitHub, CRAN
+- Language
+    - Models written in `C++` inside model specification format
+    - General purpose solver: `ODEPACK` / `DLSODA` (`FORTRAN`)
+        - Automatically detect and switch between non-stiff (Adams) and stiff (BDF)
+          methods for solving the differential equations
+    - Simulation workflow in `R`
+- Hierarchical (population) simulation
+    - `ID`, $\eta$, $\varepsilon$
+- Integrated PK functionaility
+    - Bolus, infusion, `F`, `ALAG`, `SS` etc, handled under the hood
+    - 1- and 2-cmt PK models in closed-form
+- Extensible using `R`, `C++`, `Rcpp`, `boost`, `RcppArmadillo`
+- `R` is it's natural habitat
+
+# `mrgsolve` started as `QSP` modeling tool
+- Motivation: large bone/mineral homeostatsis model (CaBone)
+- History using
+    - Berkeley Madonna
+    - WinBUGS
+    - NONMEM (attempted)
+- 2010: write `R` front end to `deSolve`
+- 2012: write `C++` interface to `DLSODA`
+- Develop dosing / event capability
+- More recently, expose functionality provided by
+    - `Rcpp` - vectors, matrices, functions, environments, random numbers 
+    - `boost` - numerical tools in `C++`
+    - users' own `C++` code (functions, data structures, classes)
+- Translator from `SBML` to `mrgsolve` using `R` bindings to `libSBML`   
+
+
+# Orientation
+
+- https://CRAN.R-project.org/package=mrgsolve
+
+- GitHub site: https://github.com/metrumresearchgroup/mrgsolve
+
+- Issues and questions: https://github.com/metrumresearchgroup/mrgsolve/issues
+
+- mrgsolve website: https://mrgsolve.github.io
+
+- User Guide: https://mrgsolve.github.io/user_guide
+
+- Blog: https://mrgsolve.github.io/blog
+
+- Vignettes: https://mrgsolve.github.io/vignettes
+
+
+
+# Wonderful options for optimization in R
 
 CRAN Task View: https://cran.r-project.org/web/views/Optimization.html
-
 
 
 
