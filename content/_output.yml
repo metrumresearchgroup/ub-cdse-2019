@@ -6,7 +6,6 @@ html_document:
   css: styles/styles.css
 github_document:
   toc: true
-  html_preview: false
   fig_width: 4
   fig_height: 2.86
 slidy_presentation:
