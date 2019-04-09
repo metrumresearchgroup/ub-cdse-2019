@@ -18,3 +18,5 @@ render("tools_profile_likelihood_closed.Rmd", output_format = "html_document")
 render("tools_profile_likelihood.Rmd", output_format = "github_document")
 render("tools_profile_likelihood.Rmd", output_format = "html_document")
 
+render("tools_sensitivity_local.Rmd", output_format = "github_document")
+render("tools_sensitivity_local.Rmd", output_format = "html_document")

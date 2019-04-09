@@ -5,20 +5,20 @@ date: ""
 ---
 
 
-```{r, setup, echo = FALSE, message = FALSE}
-source("script/global.R")
-knitr::opts_chunk$set(fig.path = "figures/sensitivity_local-", 
-                      cache=TRUE, autodep=TRUE)
-```
-
-
-
 ```{r}
 library(tidyverse)
 library(mrgsolve)
 library(FME)
 options(mrgsolve.soloc = "build")
 ```
+
+
+```{r, setup, echo = FALSE, message = FALSE}
+source("script/global.R")
+knitr::opts_chunk$set(fig.path = "figures/sensitivity_local-", 
+                      cache=TRUE, autodep=TRUE)
+```
+
 
 # Sensitivity analysis with PBPK model
 
