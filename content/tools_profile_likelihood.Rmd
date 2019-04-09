@@ -1,0 +1,140 @@
+---
+title: Likelihood Profile to Generate Standard Error
+author: "Metrum Research Group"
+date: ""
+---
+
+
+```{r, setup, echo = FALSE, message = FALSE}
+source("script/global.R")
+knitr::opts_chunk$set(fig.path = "figures/intro-")
+options(width = 130)
+```
+
+
+
+```{r}
+library(tidyverse)
+library(mrgsolve)
+library(nloptr)
+options(mrgsolve.soloc = "build")
+```
+
+# First, we fit the model by normal likelihood estimation
+
+```{r}
+mod <- mread_cache("model/yoshikado.cpp", end = 12, delta = 0.5)
+data <- read_csv("data/fig4a.csv") 
+data <- mutate(data, DV = ifelse(DV < 0, NA_real_, DV), profile = NULL)
+dose <- filter(data, evid==1)
+
+fun <- function(p,data,mod,name) {
+  names(p) <- name
+  p <- lapply(p,exp)
+  mod <- param(mod, p)
+  out <- mrgsim_d(mod,data,output="df")
+  like <- dnorm(log(data[["DV"]]),log(out[["CP"]]),sd = p$sigma,log=TRUE)
+  -2*sum(like, na.rm=TRUE)
+}
+
+theta <- c(
+  fbCLintall = 1.2, 
+  ikiu = 1.2, 
+  fbile = 0.9, 
+  ka = 0.1, 
+  ktr = 0.1,
+  sigma = 1
+) %>% log()
+
+fun(theta,data,mod,names(theta))
+
+fit <- newuoa(x0 = theta, fn = fun, data = data, mod = mod, name=names(theta))
+```
+
+
+# Generate CI by Hessian for Comparison
+Get a 95% CI using Hessian by finite difference
+```{r}
+parn <- 2
+
+mod2 <- update(mod, rtol = 1E-14, atol = 1e-14, hmax = 0.01)
+
+h <- nlme::fdHess(fit$par, fun = fun, data = data, mod = mod2, name = names(theta))
+
+se <- h$Hessian %>% solve %>% diag %>% sqrt 
+
+ci <- fit$par[parn] + 1.96*se[parn]*c(-1,1)
+
+names(ci) <- c("lb", "ub")
+
+exp(ci)
+```
+
+Same answer with `numDeriv`
+
+```{r}
+h2 <- numDeriv::hessian(fun, fit$par, data = data, mod = mod2, name = names(theta))
+se2 <- h2 %>% solve %>% diag %>% sqrt
+ci2 <- fit$par[parn] + 1.96*se2[parn]*c(-1,1)
+exp(ci2)
+```
+
+
+# Generate CI by likelihood profile
+
+
+First, let's take the estimates from the maximum likelihood estimation
+as the new set of initial estimates. 
+
+But we want to remove `ikiu`
+
+```{r}
+th <- fit$par
+names(th) <- names(theta)
+th <- th[names(th) != "ikiu"]
+```
+
+Pick a bunch of values for `ikiu` for evaluating the likelihood
+
+```{r}
+ikiu <- exp(fit$par[parn] + seq(-1,1,0.1))
+
+llprof <- function(value, fix = list(ikiu = mod$ikiu)) {
+  fix[[1]] <- value
+  mod <- update(mod, param = fix)
+  fit <- newuoa(x0 = th, fn = fun, data = data, mod = mod, name= names(th))
+  tibble(par = names(fix)[1], value = value, ofv = fit$value)
+}
+
+df <- parallel::mclapply(ikiu, llprof) %>% bind_rows()
+
+target <- 3.84 + fit$value
+
+ggplot(df, aes(value,ofv)) + geom_line(lwd=1) + geom_point(size=4) + 
+  geom_hline(yintercept = target, col="firebrick") + 
+  geom_vline(xintercept=exp(fit$par[parn]),col="firebrick") 
+
+```
+
+```{r}
+lo <- filter(df, value < mod$ikiu)
+hi <- filter(df, value > mod$ikiu)
+
+lb <- approx(lo[["ofv"]], lo[["value"]], target)$y
+ub <- approx(hi[["ofv"]], hi[["value"]], target)$y
+
+
+list(hess = exp(ci), prof = c(lower = lb, uppper = ub))
+```
+
+# Compare
+```{r}
+ggplot(df, aes(value,ofv)) + geom_line(lwd=1) + geom_point(size=4) + 
+  geom_hline(yintercept = target, col="firebrick") + 
+  geom_vline(xintercept = exp(fit$par[parn]),col="firebrick") + 
+  geom_vline(xintercept = exp(ci),col="darkgreen",lwd=1) +
+  geom_vline(xintercept = exp(ci2),col="darkgrey",lty=2,  lwd=0.8) +
+  geom_vline(xintercept = c(lb,ub),col="orange",lwd=1) +
+  ggtitle("Green/Grey: hessian; Orange: likelihood profile")
+```
+

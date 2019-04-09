@@ -1,0 +1,115 @@
+---
+title: Introduction to parameter optimization
+author: "Metrum Research Group"
+date: ""
+---
+
+
+```{r, setup, echo = FALSE, message = FALSE}
+source("script/global.R")
+knitr::opts_chunk$set(fig.path = "figures/intro-")
+options(width = 130)
+```
+
+
+
+```{r}
+library(tidyverse)
+library(mrgsolve)
+library(FME)
+options(mrgsolve.soloc = "build")
+```
+
+
+
+```{r}
+mod <- mread_cache("model/yoshikado.cpp", end = 12, delta = 0.5,atol=1E-12,rtol=1E-12)
+data <- read_csv("data/fig4a.csv") 
+data <- mutate(data, DV = ifelse(DV < 0, NA_real_, DV))
+data <- filter(data, ID==2)
+dose <- filter(data, evid==1)
+
+fun <- function(pars,data) {
+  mod %>% 
+    param(pars) %>%
+    mrgsim_d(dose,obsonly=TRUE,output="df") %>%
+    select(-ID)
+}
+
+pars <- as.list(param(mod))[c("fbCLintall", "ikiu", "fbile", "ka", "ktr", "Vadi")]
+
+locSens <- sensFun(func=fun, parms=pars, sensvar="CP", tiny=1e-5,data=data)
+```
+
+
+```{r}
+summary(locSens)
+```
+
+## summary plots
+```{r}
+plot(summary(locSens))
+```
+
+```{r}
+# nicer view
+summ <- 
+  as_tibble(summary(locSens)) %>%
+  mutate(parms = names(pars)) 
+
+ggplot(data=summ, aes(x=reorder(parms, Mean), y=Mean)) + 
+  geom_col() + 
+  labs(x="Parameter", y="Coefficient") +
+  coord_flip() +
+  geom_hline(yintercept = 0, lty=2) 
+```
+
+```{r}
+## time-course sensitivity
+plot(locSens, which = c("CP"), xlab="time", lwd = 2)
+```
+
+```{r}
+#nicer view
+df_temp <- as_tibble(locSens) %>%
+  gather(Parameter, Coefficient, -x, -var) %>%
+  mutate(Parameter = factor(Parameter)) %>%
+  rename(time=x) %>%
+  group_by(Parameter) %>%
+  mutate(Coefficient = Coefficient - first(Coefficient)) %>%
+  ungroup()
+
+ggplot(data=df_temp, aes(x=time, y=Coefficient, col=Parameter)) +
+  geom_line(lwd=1) +
+  theme(legend.position="right") +
+  facet_wrap(~var)
+
+```
+
+
+
+```{r}
+fun2 <- function(pars,data) {
+  mod <- param(mod, pars)
+  out <- mrgsim_d(mod,data,output="df")
+  wres <- (out[["CP"]] - data[["DV"]]) * 1/data[["DV"]]
+  ofv <- sum(wres, na.rm=TRUE)
+  tibble(time=12,ofv  = ofv)
+}
+
+
+locSens <- sensFun(func=fun2, parms=pars, tiny=1e-5,data=data)
+
+summ <- 
+  as_tibble(summary(locSens)) %>%
+  mutate(parms = names(pars)) 
+
+ggplot(data=summ, aes(x=reorder(parms, Mean), y=Mean)) + 
+  geom_col() + 
+  labs(x="Parameter", y="Coefficient") +
+  coord_flip() +
+  geom_hline(yintercept = 0, lty=2) 
+```
+
+
+
