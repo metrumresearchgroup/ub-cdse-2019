@@ -20,6 +20,8 @@ virtual populations (parameters) according to the method of Allen et al.
 (https://doi.org/10.1002/psp4.12063) will be demonstrated.
 
 
+![](content/images/readme_1.png)
+
 ## Vignettes
 
 - Optimization introduction [tools_optimization_intro.md](content/tools_optimization_intro.md)
