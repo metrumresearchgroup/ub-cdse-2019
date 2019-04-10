@@ -188,11 +188,12 @@ list(hess = exp(ci), profile = c(lower = lb, uppper = ub))
 
 ``` r
 ggplot(df, aes(value,ofv)) + geom_line(lwd=1) + geom_point(size=4) + 
-  geom_hline(yintercept = target, col="firebrick") + 
-  geom_vline(xintercept = exp(fit$par[parn]),col="firebrick") + 
+  geom_hline(yintercept = target, col="cornflowerblue") + 
+  geom_vline(xintercept = exp(fit$par[parn]),col="cornflowerblue") + 
   geom_vline(xintercept = c(lb,ub),col="orange",lwd=1) +
   geom_vline(xintercept = exp(ci),col="darkgreen",lwd=1,lty=2) +
-  ggtitle("Green/Grey: hessian; Orange: likelihood profile")
+  ggtitle("Green/dashed: asymptotic; Orange: likelihood profile") + ylab("-2*LL") + 
+  scale_x_continuous(name="Parameter value")
 ```
 
 <img src="figures/llp-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
