@@ -45,25 +45,13 @@ https://github.com/metrumresearchgroup/ub-cdse-2019
 - Likelihood profile
 - Generate virtual population
 
-# Optimization - likelihood function
+# Single level of random effects
 
-<img src = "../images/setup1.png" width = "1024px"></img>
-
-# Optimization - likelihood function
-
-
-<img src = "../images/setup2.png" width = "1024px"></img>
-
-# Optimization - likelihood function
-
-
-<img src = "../images/setup3.png" width = "1024px"></img>
-
-
-# Optimization - likelihood function
-
-<img src = "../images/setup4.png" width = "1024px"></img>
-
+- Today, optimizing parameters for models with single level
+of random effects (no IIV)
+- Options are available: `nlme`, `saemix`
+    - Use if really needed (like  [here](https://metrumrg.com/wp-content/uploads/2017/10/Baron_ASBMR_2013.pdf))
+- Look at [nlmixr](https://github.com/nlmixrdevelopment/nlmixr) for multi-level modeling in R with ODEs
 
 
 # About `mrgsolve` 
@@ -116,6 +104,32 @@ https://github.com/metrumresearchgroup/ub-cdse-2019
 
 - Vignettes: https://mrgsolve.github.io/vignettes
 
+
+# Optimization - log likelihood function
+
+<BR><BR><BR>
+<img src = "../images/setup1.png" width = "1024px"></img>
+
+# Optimization - log likelihood function
+
+
+<img src = "../images/setup2.png" width = "1024px"></img>
+
+# Optimization - log likelihood function
+
+
+<img src = "../images/setup2.5.png" width = "1024px"></img>
+
+
+# Optimization - log likelihood function
+
+
+<img src = "../images/setup3.png" width = "1024px"></img>
+
+
+# Optimization - log likelihood function
+
+<img src = "../images/setup4.png" width = "1024px"></img>
 
 
 # Wonderful options for optimization in R
