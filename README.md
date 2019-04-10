@@ -3,7 +3,7 @@
 ## Where / when
 
 - University at Buffalo
-  - 2018 CDSE Days (Buffalo, NY)
+  - 2019 CDSE Days (Buffalo, NY)
   - Wednesday, 10 April 2019 09:00 to 12:00
 
 
