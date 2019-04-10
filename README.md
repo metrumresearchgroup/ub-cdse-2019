@@ -20,7 +20,7 @@ virtual populations (parameters) according to the method of Allen et al.
 (https://doi.org/10.1002/psp4.12063) will be demonstrated.
 
 
-<img src = "content/images/readme_1.png" width = "400px"></img>
+<img src = "content/images/readme_1.png" width = "600px"></img>
 
 ## Vignettes
 
