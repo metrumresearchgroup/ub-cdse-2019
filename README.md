@@ -24,6 +24,7 @@ virtual populations (parameters) according to the method of Allen et al.
 
 ## Vignettes
 
+- Introduction slices [0000_welcome.html](https://raw.githubusercontent.com/metrumresearchgroup/ub-cdse-2019/master/content/slides/0000_welcome.html) __Right click on the link to download__
 - Optimization introduction [tools_optimization_intro.md](content/tools_optimization_intro.md)
 - Indomethacin PK [tools_optimization_indomethacin.md](content/tools_optimization_indomethacin.md)
 - Optimizers [tools_optimization_methods.md](content/tools_optimization_methods.md)
