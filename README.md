@@ -1,5 +1,13 @@
 # Integrating the R Package mrgsolve With Available Optimization Routines for Parameter Estimation With PK, PK-PD and QSP Models
 
+## Where / when
+
+- University at Buffalo
+  - 2018 CDSE Days (Buffalo, NY)
+  - Wednesday, 10 April 2019 09:00 to 12:00
+
+
+<hr>
 
 After a brief introduction to mrgsolve (https://mrgsolve.github.io), we will
 discuss concepts and applications for using the package in R to estimate

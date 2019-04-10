@@ -28,6 +28,11 @@ https://github.com/metrumresearchgroup/pbpk-qsp-mrgsolve
 
 CDSE Days 2018
 
+# Optimization in R with mrgsolv
+
+https://github.com/metrumresearchgroup/ub-cdse-2019
+
+
 
 # About `mrgsolve` 
 

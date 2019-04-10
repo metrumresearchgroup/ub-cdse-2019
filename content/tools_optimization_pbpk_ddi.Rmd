@@ -226,7 +226,7 @@ fit
 
 ### Get some predictions to look at how the fit went
 
-Recall that our parameters are
+Recall that our (transformed) parameters are
 ```{r}
 fit$par
 ```
@@ -234,7 +234,7 @@ fit$par
 We can generate a prediction that matches our data like this
 
 ```{r}
-sim_ofv(fit$par,data = dose, pred = TRUE) %>% filter(time >= 1)
+sim_ofv(fit$par,data = dose, pred = TRUE) %>% filter(time >= 1) %>% head
 ```
 
 We can also get the predictions under the initial conditions by passing in 
@@ -286,3 +286,5 @@ sim_ofv(fit$par,data=data)
 
 exp(fit$par)
 ```
+
+
