@@ -185,9 +185,7 @@ wss <- function(dv, pred, weight = 1/dv) {
 Arguments:
 
   - `p` the parameters proposed by the optimizer
-  - `.data` the simulation template (doses and observation records)
-  - `yobs` a vector of observed data which matches observations in
-    `.data`
+  - `data` the simulation template (doses and observation records)
   - `pred` logical; if `TRUE`, just return predicted data
 
 <!-- end list -->
@@ -207,8 +205,6 @@ sim_ofv <- function(p, data, pred = FALSE) {
   
   return(ofv)
   
-  #return(-1*sum(dnorm(log(yobs),log(out$CP),.par$sigma,log=TRUE)))
-  
 }
 ```
 
@@ -225,7 +221,6 @@ What this function does:
 
 # Data grooming
 
-  - Pick out the observations
   - Drop the non-numeric columns
 
 <!-- end list -->
@@ -438,7 +433,7 @@ tibble(
     . 5 DEoptim      0.815 0.0110 0.344 0.989 0.689
     . 6 SA           0.815 0.0110 0.344 0.989 0.688
     . 7 PSO          0.815 0.0110 0.344 0.988 0.689
-    . 8 CRS          0.815 0.0110 0.344 0.989 0.690
+    . 8 CRS          0.817 0.0110 0.345 0.980 0.692
 
 ``` r
 value0 <- sim_ofv(theta,data)

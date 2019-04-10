@@ -37,6 +37,11 @@ options(mrgsolve.soloc = "build")
 
 # Sensitivity analysis with PBPK model
 
+  - For a small change in a model parameter `p`, what is the change in
+    model output `y`?
+  - **Local** sensitivity analysis
+  - Use the `sensFun` function from the FME package
+
 ## Load the model
 
 ``` r
@@ -79,10 +84,13 @@ fun <- function(pars,data) {
 Just like in the optimization function, we update the model object with
 whatever parameters were passed in and simulate.
 
-IMPORTANT to return a data frame of simulated
-data
+IMPORTANT to return a data frame of simulated data
 
 ## Pick parameters for sensitivity analysis
+
+These are the parameters that we were focusing on in the regression
+model. Adding `Vadi` here as a negative
+control.
 
 ``` r
 pars <- as.numeric(param(mod))[c("fbCLintall", "ikiu", "fbile", "ka", "ktr", "Vadi")]
@@ -99,13 +107,18 @@ Call `sensFun` from the FME package
   - `parms` - parameters to investigate
   - `sensvar` - the output(s) that you want to look at
   - `tiny` the step size for sensitivity analysis
-  - `data` this is an argument for our sensivitity
-function
+  - `data` this is an argument for our sensivitity function
 
 <!-- end list -->
 
 ``` r
-locSens <- FME::sensFun(func=fun, parms=pars, sensvar="CP", tiny=1e-5, data=data)
+locSens <- FME::sensFun(
+  func=fun, 
+  parms=pars, 
+  sensvar="CP", 
+  tiny=1e-5, 
+  data=data
+)
 ```
 
 ## Summarize
@@ -126,10 +139,16 @@ summary(locSens)
 plots**
 
 ``` r
-plot(summary(locSens))
+plot(locSens, legpos="topright", lwd=2)
 ```
 
 <img src="figures/sensitivity_local-unnamed-chunk-9-1.png" style="display: block; margin: auto;" />
+
+``` r
+plot(summary(locSens))
+```
+
+<img src="figures/sensitivity_local-unnamed-chunk-9-2.png" style="display: block; margin: auto;" />
 
 A nicer view
 
@@ -148,13 +167,6 @@ ggplot(data=summ, aes(x=reorder(parms, Mean), y=Mean)) +
 <img src="figures/sensitivity_local-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 ``` r
-## time-course sensitivity
-plot(locSens, which = c("CP"), xlab="time", lwd = 2)
-```
-
-<img src="figures/sensitivity_local-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
-
-``` r
 #nicer view
 df_temp <- as_tibble(locSens) %>%
   gather(Parameter, Coefficient, -x, -var) %>%
@@ -170,7 +182,7 @@ ggplot(data=df_temp, aes(x=time, y=Coefficient, col=Parameter)) +
   facet_wrap(~var)
 ```
 
-<img src="figures/sensitivity_local-unnamed-chunk-12-1.png" style="display: block; margin: auto;" />
+<img src="figures/sensitivity_local-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 ``` r
 fun2 <- function(pars,data) {
@@ -195,4 +207,4 @@ ggplot(data=summ, aes(x=reorder(parms, Mean), y=Mean)) +
   geom_hline(yintercept = 0, lty=2) 
 ```
 
-<img src="figures/sensitivity_local-unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+<img src="figures/sensitivity_local-unnamed-chunk-12-1.png" style="display: block; margin: auto;" />

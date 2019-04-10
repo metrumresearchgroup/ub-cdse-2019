@@ -18,6 +18,8 @@ library(nloptr)
 options(mrgsolve.soloc = "build")
 ```
 
+<img src="images/profile_likelihood.png" width="800px"></img>
+
 # First, we fit the model by normal likelihood estimation
 
 **DATA**
@@ -119,7 +121,7 @@ th <- th[names(th) != "ikiu"]
 Pick a bunch of values for `ikiu` for evaluating the likelihood
 
 ``` r
-ikiu <- exp(fit$par[parn] + seq(-1,1,0.1))
+ikiu <- exp(fit$par[parn] + seq(-0.5,0.5,0.05))
 ```
 
 Function to re-fit the model; we keep the value of `ikiu` as well as
@@ -180,7 +182,7 @@ list(hess = exp(ci), profile = c(lower = lb, uppper = ub))
     . 
     . $profile
     .       lower      uppper 
-    . 0.008260352 0.014227654
+    . 0.008232169 0.014237283
 
 # Compare values from likelihood profile and hessian
 

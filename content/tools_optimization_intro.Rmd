@@ -166,8 +166,7 @@ theta <- c(80,-1.5)
 ofv(theta, ex, fer)
 ```
 
-This is even better.  But we can't keep going like this.  I till take 
-for ever. 
+This is even better.  But we can't keep going like this.  
 
 ## Parameter search
 
@@ -279,6 +278,7 @@ ml <- function(p, ex, fer) {
 }
 ```
 
+
 __Note__
 
 1. We have an extra parameter now ... the standard deviation for likelihood
@@ -333,8 +333,6 @@ lm(Fertility ~ Examination, data = swiss) %>% tidy %>% pull(std.error)
 ```
 
 
-
-
 You can also try `nlme::fdHess` 
 ```{r}
 library(nlme)
@@ -345,8 +343,7 @@ he$Hessian
 ```
 
 In my experience, it is frequently necessary to just bootstrap the data
-set.
-
+set.  We will look at likelihood profile in a separate vignette.
 
 # Plot predicted and observed values
 

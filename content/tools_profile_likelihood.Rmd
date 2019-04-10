@@ -18,6 +18,9 @@ knitr::opts_chunk$set(fig.path = "figures/llp-", cache=TRUE,autodep=TRUE)
 ```
 
 
+<img src="images/profile_likelihood.png" width="800px"></img>
+
+
 # First, we fit the model by normal likelihood estimation
 
 
@@ -108,7 +111,7 @@ th <- th[names(th) != "ikiu"]
 Pick a bunch of values for `ikiu` for evaluating the likelihood
 
 ```{r}
-ikiu <- exp(fit$par[parn] + seq(-1,1,0.1))
+ikiu <- exp(fit$par[parn] + seq(-0.5,0.5,0.05))
 ```
 
 Function to re-fit the model; we keep the value of `ikiu` as well as 

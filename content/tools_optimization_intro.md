@@ -197,8 +197,7 @@ ofv(theta, ex, fer)
 
     . [1] 15284.46
 
-This is even better. But we can’t keep going like this. I till take for
-ever.
+This is even better. But we can’t keep going like this.
 
 ## Parameter search
 
@@ -481,7 +480,7 @@ he$Hessian
     . [3,] -2.933469e-05 -8.123530e-05  1.056046e+00
 
 In my experience, it is frequently necessary to just bootstrap the data
-set.
+set. We will look at likelihood profile in a separate vignette.
 
 # Plot predicted and observed values
 
