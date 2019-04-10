@@ -7,7 +7,7 @@
   - Wednesday, 10 April 2019 09:00 to 12:00
 
 
-<hr>
+## Abstract
 
 After a brief introduction to mrgsolve (https://mrgsolve.github.io), we will
 discuss concepts and applications for using the package in R to estimate
